@@ -9,13 +9,13 @@ pub struct DisplayOut {
 impl DisplayOut {
     pub fn create_buffer(&self) -> Vec<Vec<char>> {
         let mut output = Vec::new();
-        for _ in 0..self.width {
-            let mut y_vec = Vec::new();
-            for _ in 0..self.height{
+        for _ in 0..self.height {
+            let mut x_vec = Vec::new();
+            for _ in 0..self.width{
                 let defaut_char = ' ';
-                y_vec.push(defaut_char);
+                x_vec.push(defaut_char);
             }
-            output.push(y_vec);
+            output.push(x_vec);
         }
         output
     }
@@ -31,23 +31,11 @@ impl DisplayOut {
 
         output_handle.write_all(b"\x1B[2J").unwrap();
 
-        let total_render_chars = input_buffer.len() * input_buffer[0].len();
-
-        let mut index = 0;
-        let mut jindx = 0;
-        for _ in 0..total_render_chars {
-            if index == input_buffer.len() {
-                println!();
-                index = 0;
-                jindx += 1;
+        for i in input_buffer {
+            for j in i {
+                print!("{}", j);
             }
-            if jindx == input_buffer[0].len() {
-                println!("Set thing to zero");
-                jindx = 0;
-            }
-            print!("{}", input_buffer[index][jindx]);
-            index += 1;
-
+            println!();
         }
         output_handle.write_all(b"\x1B[H").unwrap();
     }
