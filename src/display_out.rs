@@ -20,16 +20,24 @@ impl DisplayOut {
         output
     }
 
+    pub fn clear_buffer(&self, input_buffer: &mut Vec<Vec<char>>) {
+        for i in 0..input_buffer.len() {
+            for j in 0..input_buffer[i].len() {
+                input_buffer[i][j] = ' ';
+            }
+        }
+    }
+
     pub fn render_buffer(input_buffer: &Vec<Vec<char>>) {
         // VERY TEMPORARY SLEEP
         let sleep_time = time::Duration::from_millis(10);
 
         thread::sleep(sleep_time);
 
-        let output = io::stdout();
-        let mut output_handle = output.lock();
+        //let output = io::stdout();
+        //let mut output_handle = output.lock();
 
-        output_handle.write_all(b"\x1B[2J").unwrap();
+        //output_handle.write_all(b"\x1B[2J").unwrap();
 
         for i in input_buffer {
             for j in i {
@@ -37,6 +45,6 @@ impl DisplayOut {
             }
             println!();
         }
-        output_handle.write_all(b"\x1B[H").unwrap();
+        //output_handle.write_all(b"\x1B[H").unwrap();
     }
 }
