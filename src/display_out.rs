@@ -34,8 +34,8 @@ impl DisplayOut {
 
         thread::sleep(sleep_time);
 
-        //let output = io::stdout();
-        //let mut output_handle = output.lock();
+        let output = io::stdout();
+        let mut output_handle = output.lock();
 
         //output_handle.write_all(b"\x1B[2J").unwrap();
 
@@ -45,6 +45,6 @@ impl DisplayOut {
             }
             println!();
         }
-        //output_handle.write_all(b"\x1B[H").unwrap();
+        output_handle.write_all(b"\x1B[H").unwrap();
     }
 }

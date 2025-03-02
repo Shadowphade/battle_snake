@@ -2,7 +2,7 @@
 
 use crate::game_state::Direction;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Snake {
     pub snake_vec: Vec<SnakeSegment>,
 }
@@ -83,11 +83,11 @@ impl Snake {
                 new_segment.y_pos = last_segment.y_pos + 1;
             }
             Direction::Left => {
-                new_segment.x_pos = last_segment.x_pos + 1;
+                new_segment.x_pos = last_segment.x_pos - 1;
                 new_segment.y_pos = last_segment.y_pos;
             }
             Direction::Right => {
-                new_segment.x_pos = last_segment.x_pos - 1;
+                new_segment.x_pos = last_segment.x_pos + 1;
                 new_segment.y_pos = last_segment.y_pos;
             }
         }

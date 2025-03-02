@@ -23,23 +23,25 @@ impl SnakeRenderer {
         DisplayOut::render_buffer(&self.render_buffer);
     }
 
-    pub fn render_snake(&mut self, input: &mut Snake) {
-        for i in 0..input.snake_vec.len() {
-            if input.snake_vec[i].x_pos >= self.display_out.width {
-                input.snake_vec[i].x_pos = 0; // This will be temp
+    pub fn render_snake(&mut self, input: &Snake) -> Snake {
+        let mut output = input.clone();
+        for i in 0..output.snake_vec.len() {
+            if output.snake_vec[i].x_pos >= self.display_out.width {
+                output.snake_vec[i].x_pos = 0; // This will be temp
             }
-            if input.snake_vec[i].y_pos >= self.display_out.height {
-                input.snake_vec[i].y_pos = 0; // This will be tmp
+            if output.snake_vec[i].y_pos >= self.display_out.height {
+                output.snake_vec[i].y_pos = 0; // This will be tmp
             }
-            if input.snake_vec[i].x_pos == 0 {
-                input.snake_vec[i].x_pos = self.display_out.width - 1 ; // This will be temp
+            if output.snake_vec[i].x_pos == 0 {
+                output.snake_vec[i].x_pos = self.display_out.width - 1 ; // This will be temp
             }
-            if input.snake_vec[i].y_pos == 0 {
-                input.snake_vec[i].y_pos = self.display_out.height - 1; // This will be tmp
+            if output.snake_vec[i].y_pos == 0 {
+                output.snake_vec[i].y_pos = self.display_out.height - 1; // This will be tmp
             }
 
-            self.render_buffer[input.snake_vec[i].y_pos as usize][input.snake_vec[i].x_pos as usize] = '$';
+            self.render_buffer[output.snake_vec[i].y_pos as usize][output.snake_vec[i].x_pos as usize] = '$';
         }
+        output
     }
 
     pub fn clear_frame(&mut self) {
